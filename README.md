@@ -5,6 +5,9 @@ resolving rubygems dependencies.
 
 ## Installation
 
+rubygems-localproxy requires squid to be installed in /usr/local/sbin/squid
+(default homebrew install)
+
 install it yourself as:
 
     $ gem install rubygems-localproxy
