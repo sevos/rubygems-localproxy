@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+require 'fileutils'
+require 'erb'
+
+config_dir = File.expand_path('~/.gems-proxy')
+
+class SquidConfig
+  def initialize working_dir
+    @working_dir = working_dir
+  end
+
+  def render
+    ERB.new(template).result(binding)
+  end
+
+  private
+
+  attr_reader :working_dir
+
+  def template
+    File.read(File.expand_path('../../config/squid.conf.erb', __FILE__))
+  end
+end
+
+def generate_config config_dir
+  config = SquidConfig.new(config_dir)
+
+  File.open(File.join(config_dir, "squid.conf"), "w") do |config_file|
+    config_file.write config.render
+  end
+end
+
+def initialize_disk_cache config_dir
+  system "/usr/local/sbin/squid -f '#{config_dir}/squid.conf' -z"
+end
+
+case ARGV[0]
+when "init"
+  unless Dir.exists? config_dir
+    Dir.mkdir(config_dir)
+    FileUtils.cp File.expand_path("../../config/rewrite.rb", __FILE__),
+                 File.join(config_dir, "rewrite.rb")
+    generate_config config_dir
+    initialize_disk_cache config_dir
+  end
+when "start"
+  system "/usr/local/sbin/squid -f '#{config_dir}/squid.conf'"
+when "stop"
+  system "/usr/local/sbin/squid -f '#{config_dir}/squid.conf' -k shutdown"
+when "use"
+  puts "alias bundle='http_proxy=http://localhost:2894/ \\bundle'"
+end
