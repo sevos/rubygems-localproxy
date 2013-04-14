@@ -1,24 +1,30 @@
 # Rubygems::Localproxy
 
-TODO: Write a gem description
+This gem is for setting up squid proxy in order to speed up
+resolving rubygems dependencies.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'rubygems-localproxy'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+install it yourself as:
 
     $ gem install rubygems-localproxy
+    $ rubygems-localproxy init
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ rubygems-localproxy start
+    $ eval $(rubygems-localproxy use)
+    $ cd project/dir
+    $ bundle
+
+## Caveats
+
+Currently cachces only non-SSL requests, so bundler will be faster
+only if you have following line in your Gemfile:
+
+    source 'http://rubygems.org/'
+
+Please be warned: this is not secure production setting!
 
 ## Contributing
 
