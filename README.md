@@ -16,7 +16,7 @@ install it yourself as:
 ## Usage
 
     $ gem-localproxy start
-    $ eval $(rubygems-localproxy use)
+    $ eval $(gem-localproxy use)
     $ cd project/dir
     $ bundle
     
