@@ -11,14 +11,18 @@ rubygems-localproxy requires squid to be installed in /usr/local/sbin/squid
 install it yourself as:
 
     $ gem install rubygems-localproxy
-    $ rubygems-localproxy init
+    $ gem-localproxy init
 
 ## Usage
 
-    $ rubygems-localproxy start
+    $ gem-localproxy start
     $ eval $(rubygems-localproxy use)
     $ cd project/dir
     $ bundle
+    
+To stop squid:
+
+    $ gem-localproxy stop
 
 ## Caveats
 
